@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+#  main:
+#    container_name: main
+#    build:
+#      context: .
+#      target: development
+#    volumes:
+#      - .:/usr/src/app
+#      - /usr/src/app/node_modules
+#    ports:
+#      - "3030:3030"
+#      - "9229:9229"
+#    command: npm run start:dev
+#    env_file:
+#      - .env
+#    networks:
+#      - webnet
+#    depends_on:
+#      - mysql
+
+  redis:
+    image: redis:6
+    ports:
+      - 6379:6379
+    command: redis-server --save 60 1 --requirepass root --loglevel warning
+
+  mysql:
+    image: 'mysql:8.0'
+#    platform: linux/amd64
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - 'mysqldata:/var/lib/mysql'
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+      retries: 3
+      timeout: 5s
+
+networks:
+  webnet:
+volumes:
+  mysqldata:

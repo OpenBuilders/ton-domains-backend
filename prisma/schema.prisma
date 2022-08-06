@@ -1,0 +1,103 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int      @id @unique(map: "user_id_uindex") @default(autoincrement())
+  telegramId    String?  @db.VarChar(255)
+  state         String?  @db.VarChar(255)
+  walletAddress String?  @unique(map: "user_wallet_uindex") @db.VarChar(255)
+  balance       String?
+  onBlock       Boolean  @default(false)
+  takedAmount   String?
+  spentAmount   String?
+  blockedAmount String?
+  withdrawalAmount String?
+  createdAt     DateTime @default(now()) @db.Timestamp(0)
+
+  BlockchainDomain BlockchainDomain[]
+  Token            Token[]
+  UserFollow       UserFollow[]
+}
+
+model UserFollow {
+  id                  Int       @id @unique(map: "user_follow_id_uindex") @default(autoincrement())
+  userId              Int
+  domainName          String    @db.VarChar(255)
+  maxBid              String    @db.VarChar(255)
+  nextBid             String?   @db.VarChar(255)
+  onPause             Boolean   @default(false)
+  isPin               Boolean   @default(false)
+  isCounted           Boolean   @default(false)
+  createdAt           DateTime  @default(now()) @db.Timestamp(0)
+  lastTransactionTime DateTime? @db.Timestamp(0)
+  outbidDatetime      DateTime? @db.Timestamp(0)
+
+  blockchainDomain BlockchainDomain? @relation(fields: [domainName], references: [name], map: "domain_name_follow_id_fk")
+  user             User              @relation(fields: [userId], references: [id], map: "user_id_follow_id_fk")
+}
+
+model BlockchainDomain {
+  id   Int    @id @unique(map: "blockchain_domain_id_uindex") @default(autoincrement())
+  name String @unique(map: "domain_name_uindex") @db.VarChar(255)
+
+  initiatorAddress String? @db.VarChar(255)
+  ownerAddress     String? @db.VarChar(255)
+  auctionAddress   String? @unique(map: "auction_address_uindex") @db.VarChar(255)
+
+  transactionHash String? @db.VarChar(255)
+  lt              String? @db.VarChar(255)
+  isValid         Boolean @default(false)
+  isSynced        Boolean @default(false)
+  isCounted       Boolean @default(false)
+
+  status         String? @db.VarChar(255)
+  currentAddress String? @db.VarChar(255)
+  currentBid     String? @db.VarChar(255)
+  userId         Int?
+
+  lastBidAt  DateTime?    @db.Timestamp(0)
+  finishAt   DateTime?    @db.Timestamp(0)
+  createdAt  DateTime     @default(now()) @db.Timestamp(0)
+  UserFollow UserFollow[]
+  user       User?        @relation(fields: [userId], references: [id], map: "user_id_domain_id_fk")
+}
+
+model Token {
+  id        Int      @id @unique(map: "token_id_uindex") @default(autoincrement())
+  token     String   @unique(map: "token_token_uindex") @db.VarChar(255)
+  type      String   @db.VarChar(255)
+  userId    Int
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  payload   Json?
+
+  users User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "token_user_id_fk")
+
+  @@index([userId], map: "token_user_id_fk")
+}
+
+model BalanceTransactions {
+  id              Int      @id @unique(map: "balance_id_uindex") @default(autoincrement())
+  walletAddress   String   @db.VarChar(255)
+  amount          String   @db.VarChar(255)
+  transactionHash String   @unique(map: "transaction_hash_uindex") @db.VarChar(255)
+  inComing        Boolean  @default(true)
+  isCounted       Boolean  @default(false)
+  createdAt       DateTime @default(now()) @db.Timestamp(0)
+}
+
+model Notifications {
+  id         Int      @id @unique(map: "notification_id_uindex") @default(autoincrement())
+  type       String?
+  domainName String?
+  maxBid     String?
+  currentBid String?
+  userId     String
+  createdAt  DateTime @default(now()) @db.Timestamp(0)
+}
