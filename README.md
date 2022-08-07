@@ -32,8 +32,11 @@ $ npm run start:prod
 Environment variables
 1. `cp .env.local .env`
 2. Fill out envs with your secrets like bot token, ton-auth static secret key etc
-3. npm install
-4. npm run start:dev
+3. docker-compose up -d mysql # don't forgot create db inside
+4. npm install
+5. npx prisma db push
+6. npx prisma generate
+7. npm run start:dev
 
 ### Database structure
 
