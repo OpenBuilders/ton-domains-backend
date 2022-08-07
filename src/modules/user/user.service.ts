@@ -69,7 +69,7 @@ export class UserService {
       where: {
         blockchainDomain: {
           status: {
-            in: ['auction', 'booked', 'sync', 'sold'],
+            in: ['auction', 'booked', 'sync', 'sold', 'processing'],
           },
         },
       },
@@ -104,7 +104,7 @@ export class UserService {
     const walletAddress = this.configService.get(
       'app.blockchain.walletHighload',
     );
-    const blockStatuses = ['auction', 'booked', 'sync'];
+    const blockStatuses = ['auction', 'booked', 'sync', 'processing'];
     let updatedBlockAmount = new Big(0);
     let updatedSpentAmount = new Big(0);
 

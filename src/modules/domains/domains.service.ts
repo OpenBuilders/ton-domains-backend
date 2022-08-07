@@ -64,13 +64,13 @@ export class DomainsService {
         domain.currentBid = fullData.domainState.auction.maxBidAmount;
         domain.currentAddress = fullData.domainState.auction?.maxBidAddress;
 
-        const lastBidTime = new Date(
+        const finishAtDate = new Date(
           Number(`${fullData.domainState.auction.auctionEndTime}000`),
         );
         domain.lastBidAt = new Date();
-        domain.finishAt = lastBidTime;
+        domain.finishAt = finishAtDate;
 
-        if (lastBidTime.getTime() > new Date().getTime()) {
+        if (finishAtDate.getTime() > new Date().getTime()) {
           domain.status = 'auction';
         } else {
           domain.status = 'sold';
@@ -82,7 +82,9 @@ export class DomainsService {
           }
         }
       } else {
-        domain.status = 'sync';
+        if (domain.status != 'auction') {
+          domain.status = 'sync';
+        }
       }
     } else {
       domain.isSynced = true;

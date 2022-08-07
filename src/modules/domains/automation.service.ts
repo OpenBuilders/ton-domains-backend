@@ -30,7 +30,7 @@ export class AutomationService {
       });
   }
 
-  @Cron(CronExpression.EVERY_30_SECONDS) // TODO: Change for every 15 minutes
+  @Cron(CronExpression.EVERY_MINUTE) // TODO: Change for every 15 minutes
   automateRenewAuction() {
     this.auctionService
       .renewAuction()

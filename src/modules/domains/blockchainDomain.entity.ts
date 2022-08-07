@@ -2,7 +2,7 @@ import { BlockchainDomain, UserFollow } from '@prisma/client';
 import Big from 'big.js';
 import { SharedService } from '../shared/shared.service';
 
-export type statuses = 'booked' | 'sync' | 'processing' | 'auction' | 'sold';
+export type statuses = 'booked' | 'processing' | 'sync' | 'auction' | 'sold';
 
 export class BlockchainDomainEntity implements BlockchainDomain {
   id: number;
@@ -57,7 +57,7 @@ export class BlockchainDomainEntity implements BlockchainDomain {
       id: this.id,
       initiatorAddress: this.initiatorAddress,
       auctionAddress: this.auctionAddress,
-      status: this.status === 'booked' ? 'new' : this.status, // TODO: New status here?
+      status: this.status === 'booked' ? 'new' : this.status, // TODO: New status here? Changes on FE
       currentAddress: this.currentAddress,
       currentBid: this.currentBid,
       nextBid: nextBid,
