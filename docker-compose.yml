@@ -20,11 +20,11 @@ services:
 #    depends_on:
 #      - mysql
 
-  redis:
-    image: redis:6
-    ports:
-      - 6379:6379
-    command: redis-server --save 60 1 --requirepass root --loglevel warning
+#  redis:
+#    image: redis:6
+#    ports:
+#      - 6379:6379
+#    command: redis-server --save 60 1 --requirepass root --loglevel warning
 
   mysql:
     image: 'mysql:8.0'

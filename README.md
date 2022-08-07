@@ -2,8 +2,8 @@
 
 ## Disclaimer
 
-This is server side part of TON Domains bot. It was build quite fast, in a hackathon way, to reach MVP asap and bring the value to community. 
-We are dreaming to rewrite everything from scratch, but MVP is MVP. 
+This is server side part of TON Domains bot. It was build quite fast, in a hackathon way, to reach MVP asap and bring the value to community.
+We are dreaming to rewrite everything from scratch, but MVP is MVP.
 Don't judge this too hard, better contribute and help this to improve.
 
 ## Installation
@@ -31,7 +31,9 @@ $ npm run start:prod
 ### How setup
 Environment variables
 1. `cp .env.local .env`
-2. Take secret of ton-auth for put it in your .env
+2. Fill out envs with your secrets like bot token, ton-auth static secret key etc
+3. npm install
+4. npm run start:dev
 
 ### Database structure
 

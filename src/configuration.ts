@@ -42,7 +42,7 @@ const baseConfig = {
   toncenter: {
     token: process.env.TONCENTER_TOKEN ?? null,
     host: process.env.TONCENTER_HOST,
-    endpoint: process.env.TONCENTER_ENDPOINT,
+    endpoint: process.env.TONCENTER_HOST + '/jsonRPC',
   },
   blockchain: {
     oldDeployerSeed: process.env.WALLET_DEPLOYER,
