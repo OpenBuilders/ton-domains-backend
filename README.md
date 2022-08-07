@@ -19,8 +19,8 @@ Don't judge this too hard, better contribute and help this to improve.
 2. Fill out envs with your secrets like bot token, ton-auth static secret key etc
 3. docker-compose up -d mysql # don't forgot create db inside
 4. npm install
-5. npx prisma db push
-6. npx prisma generate
+5. npx prisma db push # one time command for run migrations in your DB
+6. npx prisma generate # one time command for generate types for prisma entities
 7. npm run start:dev
 
 ### Database structure
