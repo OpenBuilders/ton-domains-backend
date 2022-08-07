@@ -6,30 +6,15 @@ This is server side part of TON Domains bot. It was build quite fast, in a hacka
 We are dreaming to rewrite everything from scratch, but MVP is MVP.
 Don't judge this too hard, better contribute and help this to improve.
 
-## Installation
+## Install and run
 
-```bash
-$ npm install
-```
+### Few words
+- This application build on [Nest](https://github.com/nestjs/nest) framework.
+- for database management [Prisma](https://docs.nestjs.com/recipes/prisma).
+- for blockchain using [Tonweb](https://github.com/toncenter/tonweb) library.
+- also for blockchain using [Ton3](https://github.com/tonstack/ton3) library.
 
-## Running the app
-
-Build on [Nest](https://github.com/nestjs/nest) framework.
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## App shortly
-### How setup
-Environment variables
+### How setup project
 1. `cp .env.local .env`
 2. Fill out envs with your secrets like bot token, ton-auth static secret key etc
 3. docker-compose up -d mysql # don't forgot create db inside
