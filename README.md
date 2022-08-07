@@ -1,6 +1,6 @@
 # TON Domains Bot (Server)
 
-## Disclaimer
+## Disclaimer. Important
 
 This is server side part of TON Domains bot. It was build quite fast, in a hackathon way, to reach MVP asap and bring the value to community.
 We are dreaming to rewrite everything from scratch, but MVP is MVP.
