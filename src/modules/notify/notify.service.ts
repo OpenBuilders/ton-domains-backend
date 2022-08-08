@@ -11,7 +11,8 @@ export class NotifyService {
   constructor(
     @InjectBot() private bot: Telegraf<Context>,
     private readonly prismaService: PrismaService,
-  ) {}
+  ) {
+  }
 
   public sendMsg(
     telegramId: string,
@@ -59,10 +60,12 @@ export class NotifyService {
   }
 
   getNotOwnedDomainMessage(domainName, currentBid) {
+    currentBid = new Big(currentBid ?? 0).div(1000000000).toFixed(2);
     return `Someone take \n<b>${domainName}</b> with final bid - ${currentBid}`;
   }
 
   getOwnedDomainMessage(domainName, currentBid) {
+    currentBid = new Big(currentBid ?? 0).div(1000000000).toFixed(2);
     return `Congrats 🎉\n<b>${domainName}</b> is yours with bid - ${currentBid}`;
   }
 
