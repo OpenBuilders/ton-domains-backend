@@ -74,6 +74,10 @@ export class ApiService {
     return await this.highloadService.transfer(transactions);
   }
 
+  async getDnsItemInfo(address: string) {
+    return await this.tonwebService.getDnsItemInfo(address);
+  }
+
   async highloadTransferDomains(transferDomain: iTransferDomain[]) {
     return await this.highloadService.transferDomain(transferDomain);
   }

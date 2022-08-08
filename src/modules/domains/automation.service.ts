@@ -78,6 +78,18 @@ export class AutomationService {
       });
   }
 
+  @Cron(CronExpression.EVERY_30_SECONDS)
+  syncTransfersDomain() {
+    this.transferService
+      .syncAlreadyTransfers()
+      .then(() => {
+        Logger.log('Sync already transfer domains');
+      })
+      .catch((err) => {
+        Logger.error("Can't sync transfers", err);
+      });
+  }
+
   @Cron(CronExpression.EVERY_MINUTE)
   automateTransferDomains() {
     this.transferService

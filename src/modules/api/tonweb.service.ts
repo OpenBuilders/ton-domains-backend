@@ -8,11 +8,14 @@ import {
 } from 'tonweb/src/contract/token/nft/NftUtils';
 import { Address } from 'ton3';
 
+import { DnsItem } from 'tonweb/src/contract/dns/DnsItem';
+
 const TonWebTs = TonWeb as any;
 const TonWebHttpProvider = TonWebTs.HttpProvider as any;
 const TonWebCell = TonWebTs.boc.Cell as any;
 const TonWebBN = TonWebTs.utils.BN as any;
 const TonWebAddress = TonWebTs.utils.Address as any;
+const TonWebDnsItem = DnsItem as any;
 
 @Injectable()
 export class TonwebService implements OnModuleInit {
@@ -161,6 +164,31 @@ export class TonwebService implements OnModuleInit {
 
   async getAccountState(address: string) {
     return await this.tonweb.provider.getAddressInfo(address);
+  }
+
+  async getDnsItemInfo(address: string) {
+    const dnsItemAddress = new TonWebAddress(address);
+    const dnsItem = new TonWebDnsItem(this.tonweb.provider, {
+      address: dnsItemAddress,
+    });
+
+    const data = await this.dnsCollection.methods.getNftItemContent(dnsItem);
+    data.collectionAddress = data.collectionAddress.toString(true, true, true);
+    data.ownerAddress = data.ownerAddress?.toString(true, true, true);
+
+    if (!data.ownerAddress) {
+      const auctionInfo = await dnsItem.methods.getAuctionInfo();
+      auctionInfo.maxBidAddress = auctionInfo.maxBidAddress.toString(
+        true,
+        true,
+        true,
+      );
+      auctionInfo.maxBidAmount = auctionInfo.maxBidAmount.toString();
+    }
+
+    return {
+      ...data,
+    };
   }
 
   async getLastTransactions(
