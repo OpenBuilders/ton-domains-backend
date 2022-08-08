@@ -3,12 +3,16 @@ import { PrismaService } from '../../modules/prisma/prisma.service';
 import { ApiService } from '../api/api.service';
 import { BlockchainDomainEntity } from './blockchainDomain.entity';
 import { UserFollowEntity } from '../user/user-follow.entity';
+import { NotifyService } from '../notify/notify.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class DomainsService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly apiService: ApiService,
+    private readonly notifyService: NotifyService,
+    private readonly configService: ConfigService,
   ) {}
 
   /* @cron here? */
@@ -74,11 +78,30 @@ export class DomainsService {
           domain.status = 'auction';
         } else {
           domain.status = 'sold';
-          const ownerId = domain?.UserFollow?.pop()?.userId;
+          if (domain.userId) {
+            const user = await this.prismaService.user.findUnique({
+              where: {
+                id: domain.userId,
+              },
+            });
+            const botWalletAddress = this.configService.get(
+              'app.blockchain.walletHighload',
+            );
+            const isOwner = botWalletAddress == domain.currentAddress;
 
-          if (ownerId) {
-            domain.userId = ownerId;
-            // this.notifyService.sendMsg(telegramId, 'domainOwned', domain.name)
+            if (isOwner) {
+              this.notifyService.sendMsg(
+                user.telegramId,
+                'domainOwned',
+                domain,
+              );
+            } else {
+              this.notifyService.sendMsg(
+                user.telegramId,
+                'domainNotOwned',
+                domain,
+              );
+            }
           }
         }
       } else {

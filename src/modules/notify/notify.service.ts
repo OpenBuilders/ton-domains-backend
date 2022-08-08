@@ -15,16 +15,32 @@ export class NotifyService {
 
   public sendMsg(
     telegramId: string,
-    notificationType: 'maxBidLimit' | 'domainOwned',
+    notificationType: 'maxBidLimit' | 'domainOwned' | 'domainNotOwned',
     domainEntity: BlockchainDomainEntity,
-    userFollow: UserFollowEntity,
+    userFollow: UserFollowEntity | null = null,
   ) {
-    const messageText = this.getMessageText(
-      notificationType,
-      domainEntity.name,
-      userFollow,
-      domainEntity,
-    );
+    let messageText;
+    if (notificationType == 'maxBidLimit') {
+      messageText = this.getMaxBidLimitMessage(
+        domainEntity.name,
+        userFollow,
+        domainEntity,
+      );
+    }
+
+    if (notificationType == 'domainOwned') {
+      messageText = this.getOwnedDomainMessage(
+        domainEntity.name,
+        domainEntity.currentBid,
+      );
+    }
+
+    if (notificationType == 'domainNotOwned') {
+      messageText = this.getNotOwnedDomainMessage(
+        domainEntity.name,
+        domainEntity.currentBid,
+      );
+    }
 
     this.sendMsgAsync(telegramId, notificationType, messageText, domainEntity)
       .then(() =>
@@ -42,8 +58,15 @@ export class NotifyService {
       );
   }
 
-  getMessageText(
-    notificationType: string,
+  getNotOwnedDomainMessage(domainName, currentBid) {
+    return `Someone take \n<b>${domainName}</b> with final bid - ${currentBid}`;
+  }
+
+  getOwnedDomainMessage(domainName, currentBid) {
+    return `Congrats 🎉\n<b>${domainName}</b> is yours with bid - ${currentBid}`;
+  }
+
+  getMaxBidLimitMessage(
     domainName: string,
     userFollow: UserFollowEntity,
     domainEntity: BlockchainDomainEntity,
@@ -54,12 +77,8 @@ export class NotifyService {
     const currentBid = new Big(domainEntity.currentBid ?? 0)
       .div(1000000000)
       .toFixed(2);
-    switch (notificationType) {
-      case 'maxBidLimit':
-        return `Hey mate, enlarge your max bid for <b>${domainName}</b> - now it's <b>${userMaxBid}</b>, or someone else gonna take it with currentBid - ${currentBid}`;
-      case 'domainOwned':
-        return `Congrats 🎉\n<b>${domainName}</b> is yours with bid - ${currentBid}`;
-    }
+
+    return `Hey mate, enlarge your max bid for <b>${domainName}</b> - now it's <b>${userMaxBid}</b>, or someone else gonna take it with currentBid - ${currentBid}`;
   }
 
   private async sendMsgAsync(

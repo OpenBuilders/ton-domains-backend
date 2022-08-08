@@ -1,12 +1,3 @@
-import { readFileSync } from 'fs';
-
-export function extractKey(path: string) {
-  return readFileSync(path)
-    .toString()
-    .replace(/\n|\r/g, '')
-    .replace(/[-]+[\w\s]+[-]+/g, '');
-}
-
 export interface ConfigInterface {
   nodeEnv: string;
   toncenter: {
@@ -28,9 +19,6 @@ export interface ConfigInterface {
   tonApiToken: string;
 }
 
-// const apiHost = 'c0ae69885a4b.ngrok.io';
-// apiHost: 'dns-app-33kdn.ondigitalocean.app',
-const apiHost = process.env.APP_API_HOST;
 const baseConfig = {
   nodeEnv: process.env.NODE_ENV,
   bot: {
