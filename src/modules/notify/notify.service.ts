@@ -61,7 +61,7 @@ export class NotifyService {
 
   getNotOwnedDomainMessage(domainName, currentBid) {
     currentBid = new Big(currentBid ?? 0).div(1000000000).toFixed(2);
-    return `Someone take \n<b>${domainName}</b> with final bid - ${currentBid}`;
+    return `Someone took \n<b>${domainName}</b> with final bid - ${currentBid}`;
   }
 
   getOwnedDomainMessage(domainName, currentBid) {
