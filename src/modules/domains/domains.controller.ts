@@ -176,9 +176,16 @@ export class DomainsController {
       return 'Nope';
     }
 
+    if (!data.domainName || !data.maxBid) {
+      throw new HttpException(
+        'Impossible to create without domain name or maxBid',
+        400,
+      );
+    }
+
     const result = await this.followService
       .createOrUpdateFollow(new UserEntity(user), {
-        name: data.domainName,
+        name: data.domainName.toLowerCase(),
         maxBid: String(data.maxBid),
         isPin: data.isPin ?? false,
         onPause: data.onPause ?? false,
