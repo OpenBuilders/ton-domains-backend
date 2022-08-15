@@ -64,6 +64,34 @@ export class UserService {
     return follow ? new UserFollowEntity(follow) : null;
   }
 
+  public async updateLastBlockedAmount() {
+    const users = await this.prismaService.user.findMany({
+      where: {
+        NOT: [{ blockedAmount: '0' }, { blockedAmount: null }],
+        UserFollow: {
+          none: {},
+        },
+      },
+    });
+
+    for (const user of users) {
+      await this.prismaService.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          blockedAmount: '0',
+        },
+      });
+    }
+
+    if (users?.length) {
+      Logger.log('Users without domains blocked amount is updated', {
+        count: users.length,
+      });
+    }
+  }
+
   public async updateAmount() {
     const follows = await this.prismaService.userFollow.findMany({
       where: {

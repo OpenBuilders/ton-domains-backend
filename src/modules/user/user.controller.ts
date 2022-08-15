@@ -133,4 +133,9 @@ export class UserController {
   async updateBlockAmount() {
     await this.userService.updateAmount();
   }
+
+  @Cron(CronExpression.EVERY_30_SECONDS)
+  async updateLastBlockedAmount() {
+    await this.userService.updateLastBlockedAmount();
+  }
 }
