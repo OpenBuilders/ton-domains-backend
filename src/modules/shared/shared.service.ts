@@ -6,28 +6,28 @@ export class SharedService {
   static getMinBidByName(domain: string): string {
     switch (domain.length) {
       case 4:
-        return '1000000000000';
+        return '900000000000';
       // absolute min 100
       case 5:
-        return '500000000000';
+        return '450000000000';
       // absolute min 50
       case 6:
-        return '400000000000';
+        return '360000000000';
       // absolute min 40
       case 7:
-        return '300000000000';
+        return '270000000000';
       // absolute min 30
       case 8:
-        return '200000000000';
+        return '180000000000';
       // absolute min 20
       case 9:
-        return '100000000000';
+        return '90000000000';
       // absolute min 10
       case 10:
-        return '50000000000';
+        return '45000000000';
       // absolute min 5
       default:
-        return '10000000000';
+        return '9000000000';
       // absolute min 1
     }
   }
