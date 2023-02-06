@@ -34,6 +34,9 @@ Don't judge this too hard, better contribute and help this to improve.
 * BalanceTransactions - system table with all topup/withdraw transactions
 * Token - system authorisation table
 
+### Statistics on 6 FEV 2023
+![image](https://user-images.githubusercontent.com/10567518/217045463-4ae9eb96-9ec2-43c2-b54d-af80db246f34.png)
+
 
 ## Contribute 🤝
 
