@@ -42,3 +42,9 @@ Later on we gonna add dedicated Contribute.md, for now it's enough to stick to t
 1. Use conventional commits while adding changes in your PR
 2. When making the PR, describe what problem you solve and/or attach an issue
 3. Please make it clean, imagine your grandchildren gonna see that code
+
+## Donate
+
+Just in case, here is our TON wallet: `EQCpYlastF0WWcl-H9DklvLywkZYIgRF6HaPrnh5yp_-7R2U`
+
+All donations will be used, to buy some lush Pu'er tea to boost our productivity 🍵
