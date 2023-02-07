@@ -1,5 +1,7 @@
 # TON Domains Bot (Server)
 
+Win an auction and own domains in [TON](https://ton.org). The app works fine in Telegram Web App: [@autodomains_bot](https://t.me/autodomains_bot)
+
 ## Disclaimer ☝️
 
 This is server side part of TON Domains bot. It was build quite fast, in a hackathon way, to reach MVP asap and bring the value to community.
