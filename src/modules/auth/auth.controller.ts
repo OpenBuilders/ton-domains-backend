@@ -124,7 +124,7 @@ export class AuthController {
     const request = tonconnect.createRequest(
       {
         callback_url,
-        image_url: 'https://cdn.rocketon.dev/projects/rocketon-icon.png',
+        image_url: 'https://tonstarter-cdn.ams3.digitaloceanspaces.com/media/logo-square.jpg',
         items: [
           {
             type: AuthRequestTypes.ADDRESS,
